@@ -1,7 +1,12 @@
 <div class="w-full rounded-2xl bg-slate-100 p-10 shadow-lg">
-  <h1 class="text-4xl font-bold text-blue-600">
-    Rails mit Tailwindcss
-  </h1>
+
+
+  <div class="p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-subtle" role="alert">
+    <span class="font-medium">Danger alert!</span>
+    <h1 class="text-4xl font-bold">
+      Rails mit Tailwindcss
+    </h1>
+  </div>
 
   <p class="mt-4 text-lg text-red-600">
     Rails 7 mit dem gem tailwindcss ist erfolgreich verbunden.
@@ -10,4 +15,8 @@
   <button class="mt-6 rounded-lg bg-red-600 px-5 py-2 font-semibold text-white hover:bg-red-700">
     Login
   </button>
+
+  <%= render "shared/modal" %>
+
 </div>
+
