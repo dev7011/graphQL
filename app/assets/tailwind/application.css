@@ -1,4 +1,13 @@
 @import "tailwindcss";
 
-@import "./components.css";
-@import "./utilities.css";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../../../node_modules/flowbite";
+
+
+/* hier kann man eigene Tailwind-Klassen definieren, die dann in den Views verwendet werden können */
+/*@layer components {*/
+/*    .btn-primary {*/
+/*        @apply rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white;*/
+/*    }*/
+/*}*/
