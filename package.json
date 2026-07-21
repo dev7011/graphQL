@@ -1,0 +1,20 @@
+{
+  "name": "development",
+  "version": "1.0.0",
+  "description": "♦️1.  FONT-AWESOME-SASS INTEGRIEREN IN RAILS 7♦️",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {
+    "esbuild": "^0.28.1",
+    "flowbite": "^4.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
