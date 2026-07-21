@@ -1,0 +1,21 @@
+@layer components {
+  .btn {
+    @apply rounded-[3px]
+    mb-2.5!
+    bg-blue-600
+    text-lg
+    sm:text-lg
+    px-4
+    py-2
+    font-semibold
+    text-white;
+  }
+
+  .btn-primary {
+    @apply w-full
+      cursor-pointer
+      font-medium
+      transition
+    hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200 active:scale-[0.99];
+  }
+}

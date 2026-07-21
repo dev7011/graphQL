@@ -1,0 +1,9 @@
+@layer components {
+    .flex-full-center {
+      @apply flex w-full items-center justify-center rounded-2xl p-10
+    }
+
+    .flex-center {
+        @apply flex items-center justify-center rounded-2xl p-10
+    }
+}
