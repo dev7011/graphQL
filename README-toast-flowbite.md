@@ -30,7 +30,6 @@
     bin/rails tailwindcss:build
     bin/dev
 
-
 🏀 bei clone muss npm installieren
     
     bundle install
