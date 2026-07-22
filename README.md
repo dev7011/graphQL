@@ -9,3 +9,13 @@
             *= require_self
             */
             @import "font-awesome";
+
+
+♦️ README-tailwindcss ♦️
+♦️ README-toast-flowbite ♦️
+♦️ README-stimulus ♦️
+
+🏀  Bei CLONE oder FEHLERN beim Starten von Rails, kann es sein, dass die Tailwind CSS Datei nicht korrekt gebaut wurde.
+    
+    npm install
+    bin/dev
