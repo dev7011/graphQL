@@ -9,6 +9,11 @@
   </div>
 
   <div class="field">
+    <p><%= f.label :role %></p>
+    <%= f.select :role, User.roles.keys.map { |role| [role.titleize, role] }, { prompt: "Select a role" } %>
+  </div>
+
+  <div class="field">
     <p><%= f.label :password %></p>
     <% if @minimum_password_length %>
       <p><em>(<%= @minimum_password_length %> characters minimum)</em></p>
