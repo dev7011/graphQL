@@ -13,9 +13,15 @@
 
   .btn-primary {
     @apply w-full
+      block
+      text-center
       cursor-pointer
       font-medium
       transition
-    hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200 active:scale-[0.99];
+    hover:bg-blue-700
+      focus:outline-none
+      focus:ring-4
+      focus:ring-blue-200
+      active:scale-[0.99];
   }
 }

@@ -1,34 +1,64 @@
-<h2>Sign up</h2>
+<div class="flex-full-center">
+  <div class="flex-center w-[400px] rounded-[5px] bg-gradient-to-b from-blue-500 via-blue-600 to-blue-950 px-4 py-5">
+    <div class="w-full max-w-3xl rounded-2xl border border-gray-200 bg-white px-6 py-5 shadow-xl sm:px-12 lg:px-10 lg:py-10">
+      <h2 class="text-center font-semibold text-xl text-blue-900" >Registrierung</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-8" }) do |f| %>
+        <div>
+        <%= f.text_field :last_name,
+                          autofocus: true,
+                        autocomplete: "last_name",
+                        placeholder: "Last Name",
+                        class: "utility_field" %>
+        </div>
 
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
+        <div>
+          <%= f.email_field :email,
+                            autofocus: true,
+                            autocomplete: "email",
+                            placeholder: "Email",
+                            class: "utility_field" %>
+        </div>
+        <div>
+                <%= f.text_field :username,
+                               autofocus: true,
+                               autocomplete: "username",
+                               placeholder: "Username",
+                               class: "utility_field" %>
+        </div>
+
+        <div>
+          <%= f.select :role,
+                       options_for_select(User.roles.keys.map { |r| [r, r] }),
+                       { prompt: "Select Role" },
+                       { class: "utility_field" } %>
+
+        </div>
+
+        <div>
+          <%= f.password_field :password,
+                              autofocus: true,
+                              autocomplete: "new-password",
+                              placeholder: "Password",
+                              class: "utility_field" %>
+          <p class="text-[12px] text-red-400"><%= @minimum_password_length %> characters minimum</p>
+        </div>
+
+        <div>
+          <%= f.password_field :password_confirmation,
+                               autofocus: true,
+                               autocomplete: "new-password",
+                               placeholder: "Password confirmation",
+                               class: "utility_field" %>
+          <p class="text-[12px] text-red-400"><%= @minimum_password_length %> characters minimum</p>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Regitrieren", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+
+      <%= render "devise/shared/links" %>
+    </div>
   </div>
-
-  <div class="field">
-    <p><%= f.label :role %></p>
-    <%= f.select :role, User.roles.keys.map { |role| [role.titleize, role] }, { prompt: "Select a role" } %>
-  </div>
-
-  <div class="field">
-    <p><%= f.label :password %></p>
-    <% if @minimum_password_length %>
-      <p><em>(<%= @minimum_password_length %> characters minimum)</em></p>
-    <% end %>
-    <p><%= f.password_field :password, autocomplete: "new-password" %></p>
-  </div>
-
-  <div class="field">
-    <p><%= f.label :password_confirmation %></p>
-    <p><%= f.password_field :password_confirmation, autocomplete: "new-password" %></p>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

@@ -6,4 +6,19 @@
     .flex-center {
         @apply flex items-center justify-center rounded-2xl p-10
     }
+
+    .utility_field {
+        @apply w-full
+            rounded-[2px]
+            border-[1px]
+            border-gray-500
+            px-6 py-2
+            text-gray-900
+            outline-none
+            transition
+            placeholder:text-gray-500
+            focus:border-blue-500
+            focus:ring-4
+            focus:ring-blue-100
+    }
 }
