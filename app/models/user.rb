@@ -14,4 +14,8 @@ class User < ApplicationRecord
   validates :role, presence: true
   validates :username, presence: true
   validates :username, uniqueness: true
+
+  def after_confirmation
+    WelcomeMailer.send_greetings_notification(self).deliver_now
+  end
 end
