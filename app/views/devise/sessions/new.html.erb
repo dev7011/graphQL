@@ -7,10 +7,10 @@
 
       <%= form_for resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-8" } do |f| %>
         <div>
-          <%= f.email_field :email,
+          <%= f.text_field :username_or_email,
                             autofocus: true,
-                            autocomplete: "email",
-                            placeholder: "Email",
+                            autocomplete: "username_or_email",
+                            placeholder: "username or email",
                             class: "utility_field" %>
         </div>
 
