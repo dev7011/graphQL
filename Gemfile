@@ -72,3 +72,6 @@ end
 
 gem "font-awesome-sass", "~> 6.5.1"
 gem "tailwindcss-rails", "~> 4.6"
+
+gem "sidekiq", ">= 7.4"
+gem "uri", ">= 0.13.1"
