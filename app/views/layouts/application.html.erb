@@ -13,7 +13,13 @@
 
   <body>
     <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
+      <%= render "shared/sidemenu" %>
+      <div class="p-4 sm:ml-64">
+        <div class="p-4 border-1 border-default border-dashed rounded-base">
+          <%= yield %>
+        </div>
+      </div>
+
     </main>
   </body>
 </html>
