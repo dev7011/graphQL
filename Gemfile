@@ -74,3 +74,5 @@ gem "font-awesome-sass", "~> 6.5.1"
 gem "tailwindcss-rails", "~> 4.6"
 
 gem "devise", "~> 5.0"
+gem "graphql", "~> 2.3"
+gem "graphiql-rails", group: :development
