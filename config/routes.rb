@@ -3,7 +3,6 @@ Rails.application.routes.draw do
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
   post "/graphql", to: "graphql#execute"
-  resources :projects
 
   devise_for :users, controllers: {
     registrations: "users/registrations",
