@@ -5,7 +5,7 @@ class ProjectPolicy
   end
 
   def show?
-    admin? || owner?
+    admin? || owner? || member?
   end
 
   def update?
@@ -13,6 +13,10 @@ class ProjectPolicy
   end
 
   def destroy?
+    admin? || owner?
+  end
+
+  def manage_members?
     admin? || owner?
   end
 
@@ -25,6 +29,12 @@ class ProjectPolicy
   end
 
   def owner?
-    user.user? && project.owner_id == user.id
+    project.owner_id == user.id
+  end
+
+  def member?
+    project.project_members.exists?(
+      user_id: user.id
+    )
   end
 end

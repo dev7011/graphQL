@@ -41,5 +41,9 @@ module Types
     field :projects, resolver: Resolvers::ProjectsResolver, null: true
     field :project, resolver: Resolvers::ProjectResolver, null: true
 
+    field :project_member, Types::ProjectMemberType, null: true do
+      description "Returns the currently authenticated user"
+    end
+
   end
 end
