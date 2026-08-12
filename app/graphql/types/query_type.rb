@@ -27,5 +27,16 @@ module Types
     def test_field
       "Hello World!"
     end
+
+    field :current_user, Types::UserType, null: true do
+      description "Returns the currently authenticated user"
+    end
+
+    def current_user
+      context[:current_user]
+    end
+
+
+
   end
 end
