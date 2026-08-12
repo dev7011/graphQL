@@ -7,7 +7,7 @@ development:
   <<: *default
   host: localhost
   port: 5432
-  database: development
+  database: graphql_development
   username: contur
   password: contura_123
 
