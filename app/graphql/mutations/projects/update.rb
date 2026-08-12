@@ -17,14 +17,9 @@ module Mutations
       def resolve(id:, **attributes)
         user = authenticate_user!
 
-        project = Project.find_by(id: id)
-
-        if project.blank?
-          raise GraphQL::ExecutionError, "Project not found"
-        end
+        project = find_project!(id)
 
         policy = ProjectPolicy.new(user, project)
-
         unless policy.update?
           raise GraphQL::ExecutionError,
                 "Not authorized to update this project"

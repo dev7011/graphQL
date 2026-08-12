@@ -13,14 +13,9 @@ module Mutations
       def resolve(id:)
         user = authenticate_user!
 
-        project = Project.find_by(id: id)
-
-        if project.blank?
-          raise GraphQL::ExecutionError, "Project not found"
-        end
+        project = find_project!(id)
 
         policy = ProjectPolicy.new(user, project)
-
         unless policy.destroy?
           raise GraphQL::ExecutionError,
                 "Not authorized to delete this project"

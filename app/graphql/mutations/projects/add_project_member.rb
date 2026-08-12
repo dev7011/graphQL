@@ -10,12 +10,7 @@ module Mutations
       def resolve(project_id:, user_id:)
         authenticate_user!
 
-        project = Project.find_by(id: project_id)
-
-        unless project
-          raise GraphQL::ExecutionError,
-                "Project not found"
-        end
+        project = find_project!(project_id)
 
         authorize!(project, :manage_members)
 
