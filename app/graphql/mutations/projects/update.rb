@@ -31,6 +31,7 @@ module Mutations
         end
 
         project.assign_attributes(attributes)
+
         if project.save
           {
             project: project,
