@@ -15,6 +15,13 @@ class User < ApplicationRecord
     inverse_of: :owner,
     dependent: :destroy
 
+  has_many :project_members,
+    dependent: :destroy
+
+  has_many :projects,
+    through: :project_members,
+    source: :project
+
   attr_accessor :username_or_email
 
   enum :role, { user: 0, custom: 1, admin: 2 }

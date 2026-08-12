@@ -11,6 +11,10 @@ module Types
     field :status, String, null: true
     field :display_name, String, null: false
 
+    field :members, [Types::UserType], null: false do
+      description "List of members associated with the project"
+    end
+
     def display_name
       "#{object.name} (#{object.status})"
     end
