@@ -36,7 +36,9 @@ module Types
       context[:current_user]
     end
 
-
+    field :test, resolver: Resolvers::TestResolver, null: true do
+      description "Returns the currently authenticated user via TestResolver"
+    end
 
   end
 end
