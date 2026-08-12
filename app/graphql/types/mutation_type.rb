@@ -14,5 +14,10 @@ module Types
     field :delete_project, mutation: Mutations::Projects::Delete, null: false do
       description "Delete an existing project"
     end
+
+    field :add_project_member, mutation: Mutations::Projects::AddProjectMember, null: false do
+      description "Add a member to a project"
+    end
+
   end
 end
