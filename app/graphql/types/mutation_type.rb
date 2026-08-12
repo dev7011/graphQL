@@ -19,5 +19,9 @@ module Types
       description "Add a member to a project"
     end
 
+    field :remove_project_member, mutation: Mutations::Projects::RemoveProjectMember, null: false do
+      description "Remove a member from a project"
+    end
+
   end
 end

@@ -1,21 +1,11 @@
 module Mutations
   module Projects
     class AddProjectMember < Mutations::BaseMutation
-      argument :project_id,
-               ID,
-               required: true
+      argument :project_id, ID, required: true
+      argument :user_id, ID, required: true
 
-      argument :user_id,
-               ID,
-               required: true
-
-      field :project_member,
-            Types::ProjectMemberType,
-            null: true
-
-      field :errors,
-            [String],
-            null: false
+      field :project_member, Types::ProjectMemberType, null: true
+      field :errors, [String], null: false
 
       def resolve(project_id:, user_id:)
         authenticate_user!
