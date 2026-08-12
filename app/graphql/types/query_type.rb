@@ -31,14 +31,15 @@ module Types
     field :current_user, Types::UserType, null: true do
       description "Returns the currently authenticated user"
     end
-
     def current_user
       context[:current_user]
     end
-
     field :test, resolver: Resolvers::TestResolver, null: true do
       description "Returns the currently authenticated user via TestResolver"
     end
+
+    field :projects, resolver: Resolvers::ProjectsResolver, null: true
+    field :project, resolver: Resolvers::ProjectResolver, null: true
 
   end
 end
