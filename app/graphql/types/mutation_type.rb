@@ -23,5 +23,9 @@ module Types
       description "Remove a member from a project"
     end
 
+    # Task
+    field :createTask, mutation: Mutations::Tasks::Create, null: false do
+      description "Create a new task"
+    end
   end
 end
