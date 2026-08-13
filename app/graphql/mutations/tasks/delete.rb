@@ -3,27 +3,31 @@
 module Mutations
   module Tasks
     class Delete < BaseMutation
+      # FIX Problem mit duplication name Delete (projects/tasks)
+      graphql_name "DeleteTask"
+
       # Define the input fields for the mutation
       argument :id, ID, required: true
 
-      field :task, Types::ProjectType, null: true
+      field :task, Types::TaskType, null: true
       field :flashes, [String], null: false
 
       def resolve(id:)
         user = authenticate_user!
 
         task = find_model!(Task, id)
+
         authorize!(task, :destroy?, user: user)
 
         if task.destroy
           {
             task: task,
-            flashes: ["Project was successfully deleted"]
+            flashes: ["task was successfully deleted"]
           }
         else
           {
             task: task,
-            flashes: project.errors.full_messages
+            flashes: task.errors.full_messages
           }
         end
       end

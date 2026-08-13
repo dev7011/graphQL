@@ -3,8 +3,11 @@
 module Mutations
   module Tasks
     class Create < BaseMutation
+      # FIX Problem mit duplication name create (projects/tasks)
+      graphql_name "CreateTask"
+
       # Define the input fields for the mutation
-      argument :name, String, required: true
+      argument :title, String, required: true
       argument :description, String, required: false
       argument :status, String, required: true
       argument :priority, String, required: true

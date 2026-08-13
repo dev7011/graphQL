@@ -27,5 +27,8 @@ module Types
     field :createTask, mutation: Mutations::Tasks::Create, null: false do
       description "Create a new task"
     end
+
+    field :updateTask, mutation: Mutations::Tasks::Update, null: false
+    field :deleteTask, mutation: Mutations::Tasks::Delete, null: false
   end
 end
