@@ -15,6 +15,10 @@ module Types
       description "List of members associated with the project"
     end
 
+    field :tasks, [Types::TaskType], null: false do
+      description "List of tasks associated with the project"
+    end
+
     def display_name
       "#{object.name} (#{object.status})"
     end

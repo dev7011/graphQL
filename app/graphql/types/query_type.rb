@@ -18,19 +18,10 @@ module Types
       ids.map { |id| context.schema.object_from_id(id, context) }
     end
 
-    # Add root-level fields here.
-    # They will be entry points for queries on your schema.
-
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
-    end
-
     field :current_user, Types::UserType, null: true do
       description "Returns the currently authenticated user"
     end
+
     def current_user
       context[:current_user]
     end
@@ -45,5 +36,16 @@ module Types
       description "Returns the currently authenticated user"
     end
 
+    field :assignees, [Types::TaskType], null: true do
+      description "Returns a list of tasks"
+    end
+
+    field :tasks, [Types::TaskType], null: true do
+      description "Returns a list of tasks"
+    end
+
+    def tasks
+      Task.all
+    end
   end
 end
