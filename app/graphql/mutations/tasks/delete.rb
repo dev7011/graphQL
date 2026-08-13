@@ -15,7 +15,7 @@ module Mutations
       def resolve(id:)
         user = authenticate_user!
 
-        task = find_model!(Task, id)
+        task = find_record!(Task, id)
 
         authorize!(task, :destroy?, user: user)
 

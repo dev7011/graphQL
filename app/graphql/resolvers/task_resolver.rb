@@ -8,7 +8,7 @@ module Resolvers
     def resolve(id: )
       authenticate_user!
 
-      find_model!(Task, id)
+      find_record!(Task, id)
     end
   end
 end

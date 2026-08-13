@@ -3,7 +3,7 @@ module ModelHelpers
 
   private
 
-  def find_model!(model, id)
+  def find_record!(model, id)
     model.find_by(id: id) ||
       raise(
         GraphQL::ExecutionError,

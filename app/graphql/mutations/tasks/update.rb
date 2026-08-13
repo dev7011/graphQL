@@ -22,7 +22,7 @@ module Mutations
       def resolve(id:, **attributes)
         user = authenticate_user!
 
-        task = find_model!(Task, id)
+        task = find_record!(Task, id)
 
         authorize!(task, :update?, user: user)
 
