@@ -18,7 +18,8 @@ module Mutations
         project_id:,
         title:,
         description: nil,
-        priority: "medium",
+        priority: Types::Enums::TaskPriorityEnum["medium"],
+        status: Types::Enums::TaskStatusEnum["todo"],
         due_date: nil,
         assignee_id: nil
       )
@@ -38,6 +39,7 @@ module Mutations
           title: title,
           description: description,
           priority: priority,
+          status: status,
           due_date: due_date,
           assignee: assignee
         )

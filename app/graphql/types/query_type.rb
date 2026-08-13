@@ -45,5 +45,8 @@ module Types
       argument :id, ID, required: true
     end
 
+    field :tasks, resolver: Resolvers::TasksResolver, null: true do
+      description "Returns a list of tasks"
+    end
   end
 end

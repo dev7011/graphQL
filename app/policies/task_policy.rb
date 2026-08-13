@@ -10,6 +10,10 @@ class TaskPolicy
     end
   end
 
+  def show?
+    admin? || owner? || editable_member?
+  end
+
   def create?
     admin? || owner? || editable_member?
   end
