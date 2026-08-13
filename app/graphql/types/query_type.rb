@@ -40,12 +40,10 @@ module Types
       description "Returns a list of tasks"
     end
 
-    field :tasks, [Types::TaskType], null: true do
-      description "Returns a list of tasks"
+    field :task, resolver: Resolvers::TaskResolver, null: true do
+      description "Returns a task by ID"
+      argument :id, ID, required: true
     end
 
-    def tasks
-      Task.all
-    end
   end
 end
