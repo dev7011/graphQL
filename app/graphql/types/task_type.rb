@@ -3,9 +3,9 @@ module Types
     field :id, ID, null: false
     field :title, String, null: false
     field :description, String, null: true
-    field :status, String, null: false
-    field :priority, String, null: false
 
+    field :status, Types::Enums::TaskStatusEnum, null: false
+    field :priority, Types::Enums::TaskPriorityEnum, null: false
     field :project, Types::ProjectType, null: false
     field :assignee, Types::UserType, null: true
 

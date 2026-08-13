@@ -10,8 +10,8 @@ module Mutations
       argument :id, ID, required: true
       argument :title, String, required: true
       argument :description, String, required: false
-      argument :status, String, required: true
-      argument :priority, String, required: true
+      argument :status, Types::Enums::TaskStatusEnum, required: true
+      argument :priority, Types::Enums::TaskPriorityEnum, required: true
 
       argument :assignee_id, Integer, required: false
       argument :project_id, Integer, required: true

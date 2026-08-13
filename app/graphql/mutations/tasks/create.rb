@@ -6,7 +6,8 @@ module Mutations
       argument :project_id, ID, required: true
       argument :title, String, required: true
       argument :description, String, required: false
-      argument :priority, String, required: false
+      argument :priority, Types::Enums::TaskPriorityEnum, required: false
+      argument :status, Types::Enums::TaskStatusEnum, required: false
       argument :due_date, GraphQL::Types::ISO8601Date, required: false
       argument :assignee_id, ID, required: false
 
