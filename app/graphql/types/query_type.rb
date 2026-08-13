@@ -49,6 +49,10 @@ module Types
       description "Returns a list of tasks"
     end
 
+    field :tasks_pagination, resolver: Resolvers::TasksPaginationResolver, null: true do
+      description "Returns a paginated list of tasks"
+    end
+
     field :tasks_result, resolver: Resolvers::TasksResultResolver, null: true do
       description "Returns a list of tasks with result"
     end
