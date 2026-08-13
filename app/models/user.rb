@@ -22,6 +22,11 @@ class User < ApplicationRecord
     through: :project_members,
     source: :project
 
+  has_many :assigned_tasks,
+    class_name: "Task",
+    inverse_of: :assignee,
+    dependent: :destroy
+
   attr_accessor :username_or_email
 
   enum :role, { user: 0, custom: 1, admin: 2 }
@@ -48,11 +53,12 @@ class User < ApplicationRecord
 
       if username_or_email
         value = username_or_email.to_s.downcase
-        scope = scope.where("LOWER(username) = ? OR LOWER(email) = ?", value, value)
+        username_lower = Arel::Nodes::NamedFunction.new("LOWER", [arel_table[:username]])
+        email_lower = Arel::Nodes::NamedFunction.new("LOWER", [arel_table[:email]])
+        scope = scope.where(username_lower.eq(value).or(email_lower.eq(value)))
       end
 
       scope.first
     end
   end
 end
-

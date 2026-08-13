@@ -16,6 +16,9 @@ class Project < ApplicationRecord
     through: :project_members,
     source: :user
 
+  has_many :tasks,
+    dependent: :destroy
+
   validates :status,
     presence: true
 
