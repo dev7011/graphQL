@@ -48,5 +48,9 @@ module Types
     field :tasks, resolver: Resolvers::TasksResolver, null: true do
       description "Returns a list of tasks"
     end
+
+    field :tasks_result, resolver: Resolvers::TasksResultResolver, null: true do
+      description "Returns a list of tasks with result"
+    end
   end
 end
