@@ -1,14 +1,13 @@
 module Authorizable
-
   private
 
   def authorize!(record, action, user: nil)
-    policy_class = "#{record.class.name}Policy".safe_constantize
-    policy = policy_class.new(user, record)
+    model_name = record.is_a?(Class) ? record.name : record.class.name
 
-    return true if policy.public_send(action)
+    policy_name = "#{model_name}Policy".safe_constantize
 
-    raise GraphQL::ExecutionError, "Not authorized to #{action} this #{record.class.name.downcase}"
+    policy_name.new(user, record).public_send(action)
+  rescue NameError
+    raise GraphQL::ExecutionError, "No policy found for #{record.class.name}"
   end
-
 end
