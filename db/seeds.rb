@@ -8,7 +8,6 @@
 end
 
 10.times do
-  next
   User.create(
     last_name: Faker::Name.last_name,
     username: Faker::Internet.username(specifier: 5..8),
@@ -16,5 +15,19 @@ end
     password: "password",
     password_confirmation: "password",
     role: rand(0..2)
+  )
+end
+
+project = Project.find(57)
+user = User.find(11)
+
+100.times do |i|
+  project.tasks.create!(
+    title: Faker::Lorem.sentence(word_count: 10),
+    description: Faker::Lorem.paragraph,
+    status: %w[todo in_progress done].sample,
+    priority: %w[low medium high].sample,
+    due_date: Date.current + rand(1..30).days,
+    assignee: user
   )
 end
