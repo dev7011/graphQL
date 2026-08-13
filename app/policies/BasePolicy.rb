@@ -8,6 +8,10 @@ class BasePolicy
     admin? || owner? || member?
   end
 
+  def create?
+    admin?
+  end
+
   def update?
     admin? || owner?
   end
