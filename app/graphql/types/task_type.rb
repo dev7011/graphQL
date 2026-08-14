@@ -9,5 +9,13 @@ module Types
     field :project, Types::ProjectType, null: false
     field :assignee, Types::UserType, null: true
 
+    def assignee
+      dataload_association(object, :assignee)
+    end
+
+    def project
+      dataload_association(object, :project)
+    end
+
   end
 end

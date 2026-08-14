@@ -22,5 +22,18 @@ module Types
     def display_name
       "#{object.name} (#{object.status})"
     end
+
+    def owner
+      dataload_association(object, :owner)
+    end
+
+    def members
+      dataload_association(object, :members)
+    end
+
+    def tasks
+      dataload_association(object, :tasks)
+    end
+
   end
 end
