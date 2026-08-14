@@ -31,9 +31,5 @@ module Types
       dataload_association(object, :members)
     end
 
-    def tasks
-      dataload_association(object, :tasks)
-    end
-
   end
 end

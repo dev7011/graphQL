@@ -4,45 +4,22 @@ module Mutations
       graphql_name "CreateTask"
 
       argument :project_id, ID, required: true
-      argument :title, String, required: true
-      argument :description, String, required: false
-      argument :priority, Types::Enums::TaskPriorityEnum, required: false
-      argument :status, Types::Enums::TaskStatusEnum, required: false
-      argument :due_date, GraphQL::Types::ISO8601Date, required: false
-      argument :assignee_id, ID, required: false
+      argument :attributes, Types::Inputs::TaskInput, required: true
 
       field :task, Types::TaskType, null: true
       field :errors, [String], null: false
 
-      def resolve(
-        project_id:,
-        title:,
-        description: nil,
-        priority: Types::Enums::TaskPriorityEnum["medium"],
-        status: Types::Enums::TaskStatusEnum["todo"],
-        due_date: nil,
-        assignee_id: nil
-      )
+      def resolve(project_id:, attributes:)
         user = authenticate_user!
 
         project = find_project!(project_id)
 
         authorize!(project, :create?, user: user)
 
-        assignee =
-          find_valid_assignee(
-            project,
-            assignee_id
-          )
-
-        task = project.tasks.new(
-          title: title,
-          description: description,
-          priority: priority,
-          status: status,
-          due_date: due_date,
-          assignee: assignee
-        )
+        attrs = attributes.to_h
+        assignee_id = attrs.delete(:assignee_id)
+        assignee = find_valid_assignee(project, assignee_id)
+        task = project.tasks.new(attrs.merge(assignee: assignee))
 
         if task.save
           {

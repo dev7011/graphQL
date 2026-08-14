@@ -7,36 +7,28 @@ module Mutations
       graphql_name "UpdateTask"
 
       # Define the input fields for the mutation
-      argument :id, ID, required: true
-      argument :title, String, required: true
-      argument :description, String, required: false
-      argument :status, Types::Enums::TaskStatusEnum, required: true
-      argument :priority, Types::Enums::TaskPriorityEnum, required: true
-
-      argument :assignee_id, Integer, required: false
-      argument :project_id, Integer, required: true
+      argument :task_id, ID, required: true
+      argument :attributes, Types::Inputs::TaskUpdateInput, required: true
 
       field :task, Types::TaskType, null: true
-      field :flashes, [String], null: false
+      field :errors, [String], null: false
 
-      def resolve(id:, **attributes)
+      def resolve(task_id:, attributes:)
         user = authenticate_user!
 
-        task = find_record!(Task, id)
-
+        task = find_record!(Task, task_id)
         authorize!(task, :update?, user: user)
 
-        task.assign_attributes(attributes)
-
+        task.assign_attributes(attributes.to_h)
         if task.save
           {
             task: task,
-            flashes: []
+            errors: []
           }
         else
           {
             task: task,
-            flashes: task.errors.full_messages
+            errors: task.errors.full_messages
           }
         end
       end
