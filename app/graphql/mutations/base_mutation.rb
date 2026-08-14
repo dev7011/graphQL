@@ -2,9 +2,9 @@
 
 module Mutations
   class BaseMutation < GraphQL::Schema::RelayClassicMutation
-    include Authorizable
-    #include ModelHelpers
-    #
+    include Authenticatable
+    include Errors::AuthorizeError
+
     private
 
     def current_user
