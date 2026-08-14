@@ -22,4 +22,18 @@ class Project < ApplicationRecord
   validates :status,
     presence: true
 
+  def owner?(user)
+    owner_id == user.id
+  end
+
+  def member?(user)
+    project_members.exists?(
+      user_id: user.id
+    )
+  end
+
+  def includes_user?(user)
+    owner?(user) || member?(user)
+  end
+
 end

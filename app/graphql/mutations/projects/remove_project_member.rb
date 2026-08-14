@@ -12,45 +12,13 @@ module Mutations
         authenticate_user!
 
         project = find_project!(project_id)
-
         authorize!(project, :manage_members)
 
-        if project.owner_id.to_s == user_id.to_s
-          return {
-            success: false,
-            removed_user_id: nil,
-            errors: ["Project owner cannot be removed"]
-          }
-        end
+        user = User.find_by(id: user_id)
 
-        project_member =
-          project.project_members.find_by(
-            user_id: user_id
-          )
-
-        unless project_member
-          return {
-            success: false,
-            removed_user_id: nil,
-            errors: ["Project member not found"]
-          }
-        end
-
-        removed_user_id = project_member.user_id
-
-        if project_member.destroy
-          {
-            success: true,
-            removed_user_id: removed_user_id,
-            errors: []
-          }
-        else
-          {
-            success: false,
-            removed_user_id: nil,
-            errors: project_member.errors.full_messages
-          }
-        end
+        ::Projects::RemoveMember
+                           .new(project: project, user: user)
+                           .call
       end
     end
   end

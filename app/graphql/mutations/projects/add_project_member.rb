@@ -23,31 +23,11 @@ module Mutations
           }
         end
 
-        if project.owner_id == user.id
-          return {
-            project_member: nil,
-            errors: ["Project owner cannot be added as a member"]
-          }
-        end
+        project_member = ::Projects::AddMember
+                           .new(project: project, user: user)
+                           .call
 
-        existing_member =
-          project.project_members.find_by(
-            user_id: user.id
-          )
-
-        if existing_member
-          return {
-            project_member: nil,
-            errors: ["User is already a project member"]
-          }
-        end
-
-        project_member =
-          project.project_members.new(
-            user: user
-          )
-
-        if project_member.save
+        if project_member.persisted?
           {
             project_member: project_member,
             errors: []
@@ -58,6 +38,11 @@ module Mutations
             errors: project_member.errors.full_messages
           }
         end
+      rescue ArgumentError => e
+        {
+          project_member: nil,
+          errors: [e.message]
+        }
       end
     end
   end
