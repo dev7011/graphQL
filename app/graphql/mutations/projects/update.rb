@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 module Mutations
   module Projects
@@ -15,26 +14,20 @@ module Mutations
       field :errors, [String], null: false
 
       def resolve(id:, **attributes)
-        user = authenticate_user!
+        authenticate_user!
 
         project = find_project!(id)
 
-        policy = ProjectPolicy.new(user, project)
-        unless policy.update?
-          raise GraphQL::ExecutionError,
-                "Not authorized to update this project"
-        end
+        authorize!(project, :update)
 
-        project.assign_attributes(attributes)
-
-        if project.save
+        if project.update(attributes)
           {
             project: project,
             errors: []
           }
         else
           {
-            project: project,
+            project: nil,
             errors: project.errors.full_messages
           }
         end

@@ -2,8 +2,7 @@
 
 module Mutations
   class BaseMutation < GraphQL::Schema::RelayClassicMutation
-    include Authenticatable
-    include Errors::AuthorizeError
+    include GraphqlAuthorization
 
     private
 

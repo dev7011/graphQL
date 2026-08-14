@@ -10,18 +10,25 @@ module Mutations
       field :errors, [String], null: false
 
       def resolve(project_id:, attributes:)
-
-        user = authenticate_user!
+        authenticate_user!
 
         project = find_project!(project_id)
 
-        authorize_resource!(project, :create?, user: user)
-
+        authorize_with!(
+          TaskPolicy,
+          project,
+          :create
+        )
 
         attrs = attributes.to_h
+
         assignee_id = attrs.delete(:assignee_id)
+
         assignee = find_valid_assignee(project, assignee_id)
-        task = project.tasks.new(attrs.merge(assignee: assignee))
+
+        task = project.tasks.new(
+          attrs.merge(assignee: assignee)
+        )
 
         if task.save
           {
@@ -34,13 +41,6 @@ module Mutations
             errors: task.errors.full_messages
           }
         end
-      rescue GraphQL::ExecutionError
-        raise
-      rescue ArgumentError => e
-        {
-          task: nil,
-          errors: [e.message]
-        }
       end
 
       private

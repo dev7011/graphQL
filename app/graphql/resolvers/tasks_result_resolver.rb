@@ -12,7 +12,7 @@ module Resolvers
     def resolve(assignee_id: nil, status: nil, search: nil)
       user = authenticate_user!
 
-      authorize_resource!(Task, :show?, user: user)
+      authorize!(Task, :show?, user: user)
 
       scope = Task.all
       scope = scope.where(assignee_id: assignee_id) if assignee_id

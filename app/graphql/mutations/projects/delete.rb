@@ -11,24 +11,24 @@ module Mutations
       field :informations, [String], null: false
 
       def resolve(id:)
-        user = authenticate_user!
+        authenticate_user!
 
         project = find_project!(id)
 
-        policy = ProjectPolicy.new(user, project)
-        unless policy.destroy?
-          raise GraphQL::ExecutionError,
-                "Not authorized to delete this project"
-        end
+        authorize!(project, :destroy)
+
+        deleted_project_id = project.id
 
         if project.destroy
           {
-            project: project,
-            informations: ["Project was successfully deleted"]
+            success: true,
+            deleted_project_id: deleted_project_id,
+            errors: []
           }
         else
           {
-            project: project,
+            success: false,
+            deleted_project_id: nil,
             errors: project.errors.full_messages
           }
         end

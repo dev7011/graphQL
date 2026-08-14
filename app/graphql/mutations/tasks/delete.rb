@@ -10,24 +10,28 @@ module Mutations
       argument :id, ID, required: true
 
       field :task, Types::TaskType, null: true
-      field :flashes, [String], null: false
+      field :errors, [String], null: false
 
       def resolve(id:)
-        user = authenticate_user!
+        authenticate_user!
 
-        task = find_record!(Task, id)
+        task = find_task!(id)
 
-        authorize_resource!(task, :destroy?, user: user)
+        authorize!(task, :destroy)
+
+        deleted_task_id = task.id
 
         if task.destroy
           {
-            task: task,
-            flashes: ["task was successfully deleted"]
+            success: true,
+            deleted_task_id: deleted_task_id,
+            errors: []
           }
         else
           {
-            task: task,
-            flashes: task.errors.full_messages
+            success: false,
+            deleted_task_id: nil,
+            errors: task.errors.full_messages
           }
         end
       end
