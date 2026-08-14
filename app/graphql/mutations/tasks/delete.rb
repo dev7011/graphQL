@@ -17,7 +17,7 @@ module Mutations
 
         task = find_record!(Task, id)
 
-        authorize!(task, :destroy?, user: user)
+        authorize_resource!(task, :destroy?, user: user)
 
         if task.destroy
           {

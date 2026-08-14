@@ -10,11 +10,13 @@ module Mutations
       field :errors, [String], null: false
 
       def resolve(project_id:, attributes:)
+
         user = authenticate_user!
 
         project = find_project!(project_id)
 
-        authorize!(project, :create?, user: user)
+        authorize_resource!(project, :create?, user: user)
+
 
         attrs = attributes.to_h
         assignee_id = attrs.delete(:assignee_id)

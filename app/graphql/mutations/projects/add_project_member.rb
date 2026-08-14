@@ -12,7 +12,7 @@ module Mutations
 
         project = find_project!(project_id)
 
-        authorize!(project, :manage_members)
+        authorize_resource!(project, :manage_members)
 
         user = User.find_by(id: user_id)
 

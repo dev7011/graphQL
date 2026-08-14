@@ -17,7 +17,7 @@ module Mutations
         user = authenticate_user!
 
         task = find_record!(Task, task_id)
-        authorize!(task, :update?, user: user)
+        authorize_resource!(task, :update?, user: user)
 
         task.assign_attributes(attributes.to_h)
         if task.save
