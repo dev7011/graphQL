@@ -1,5 +1,5 @@
 module Errors
-  class AuthorizeError < GraphqlError
+  module AuthorizeError
     private
 
     def not_found!(resource = "Resource")

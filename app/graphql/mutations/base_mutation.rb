@@ -12,7 +12,7 @@ module Mutations
     end
 
     def find_record!(model, id)
-      model.find_by(id: id) || not_found!("Project")
+      model.find_by(id: id) || not_found!(model.name)
     end
   end
 end
