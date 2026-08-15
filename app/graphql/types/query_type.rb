@@ -2,7 +2,8 @@
 
 module Types
   class QueryType < Types::BaseObject
-    field :node, Types::NodeType, null: true, description: "Fetches an object given its ID." do
+    field :node, null: true, description: "Fetches an object given its ID." do
+      type NodeType
       argument :id, ID, required: true, description: "ID of the object."
     end
 
@@ -18,42 +19,45 @@ module Types
       ids.map { |id| context.schema.object_from_id(id, context) }
     end
 
-    field :current_user, Types::UserType, null: true do
+    field :current_user, null: true do
+      type UserType
       description "Returns the currently authenticated user"
     end
 
     def current_user
       context[:current_user]
     end
+
     field :test, resolver: Resolvers::TestResolver, null: true do
       description "Returns the currently authenticated user via TestResolver"
     end
 
-    field :projects, resolver: Resolvers::ProjectsResolver, null: true
-    field :project, resolver: Resolvers::ProjectResolver, null: true
+    field :projects, resolver: Resolvers::Projects::ProjectsResolver, null: true
+    field :project, resolver: Resolvers::Projects::ProjectResolver, null: true
 
-    field :project_member, Types::ProjectMemberType, null: true do
+    field :project_member, null: true do
+      type Projects::ProjectMemberType
       description "Returns the currently authenticated user"
     end
 
-    field :assignees, [Types::TaskType], null: true do
+    field :assignees, [Types::Tasks::TaskType], null: true do
       description "Returns a list of tasks"
     end
 
-    field :task, resolver: Resolvers::TaskResolver, null: true do
+    field :task, resolver: Resolvers::Tasks::TaskResolver, null: true do
       description "Returns a task by ID"
       argument :id, ID, required: true
     end
 
-    field :tasks, resolver: Resolvers::TasksResolver, null: true do
+    field :tasks, resolver: Resolvers::Tasks::TasksResolver, null: true do
       description "Returns a list of tasks"
     end
 
-    field :tasks_pagination, resolver: Resolvers::TasksPaginationResolver, null: true do
+    field :tasks_pagination, resolver: Resolvers::Tasks::TasksPaginationResolver, null: true do
       description "Returns a paginated list of tasks"
     end
 
-    field :tasks_result, resolver: Resolvers::TasksResultResolver, null: true do
+    field :tasks_result, resolver: Resolvers::Tasks::TasksResultResolver, null: true do
       description "Returns a list of tasks with result"
     end
   end

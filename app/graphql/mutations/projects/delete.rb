@@ -6,7 +6,7 @@ module Mutations
       # Define the input fields for the mutation
       argument :id, ID, required: true
 
-      field :project, Types::ProjectType, null: true
+      field :project, Types::Projects::ProjectType, null: true
       field :errors, [String], null: false
       field :informations, [String], null: false
 

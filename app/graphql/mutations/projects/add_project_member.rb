@@ -4,7 +4,7 @@ module Mutations
       argument :project_id, ID, required: true
       argument :user_id, ID, required: true
 
-      field :project_member, Types::ProjectMemberType, null: true
+      field :project_member, Types::Projects::ProjectMemberType, null: true
       field :errors, [String], null: false
 
       def resolve(project_id:, user_id:)

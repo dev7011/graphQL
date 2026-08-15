@@ -8,7 +8,7 @@ module Types
     field :role, Integer, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
-    field :assigned_tasks, Types::TaskType.connection_type, null: false
+    field :assigned_tasks, Types::Tasks::TaskType.connection_type, null: false
     field :assigned_tasks_counter, Integer, null: false
 
     def assigned_tasks_counter

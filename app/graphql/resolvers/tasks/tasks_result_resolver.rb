@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Resolvers
-  class TasksResultResolver < BaseResolver
-    # [Types::TaskType]: ist Array von TaskType,
-    type Types::TaskResultType, null: false
+  module Tasks
+    class TasksResultResolver < BaseResolver
+    type Types::Tasks::TaskResultType, null: false
     
     argument :assignee_id, ID, required: false
     argument :status, Types::Enums::TaskStatusEnum, required: false
@@ -26,6 +26,7 @@ module Resolvers
         high_count: scope.where(priority: "high").count,
         tasks: scope
       }
+    end
     end
   end
 end

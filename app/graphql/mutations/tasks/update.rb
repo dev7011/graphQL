@@ -10,7 +10,7 @@ module Mutations
       argument :id, ID, required: true
       argument :attributes, Types::Inputs::TaskUpdateInput, required: true
 
-      field :task, Types::TaskType, null: true
+      field :task, Types::Tasks::TaskType, null: true
       field :errors, [String], null: false
 
       def resolve(id:, attributes:)

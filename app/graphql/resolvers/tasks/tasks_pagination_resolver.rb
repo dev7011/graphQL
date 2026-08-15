@@ -1,6 +1,8 @@
 module Resolvers
-  class TasksResolver < BaseResolver
-    type [Types::TaskType], null: false
+  module Tasks
+    class TasksPaginationResolver < BaseResolver
+    type Types::Tasks::TaskType.connection_type,
+         null: false
 
     argument :project_id, ID, required: true
     argument :status, Types::Enums::TaskStatusEnum, required: false
@@ -15,9 +17,7 @@ module Resolvers
     )
       user = authenticate_user!
 
-      project = find_project!(
-        project_id
-      )
+      project = find_project!(project_id)
 
       authorize_project!(
         user,
@@ -42,7 +42,8 @@ module Resolvers
       )
 
       scope.order(
-        created_at: :desc
+        created_at: :desc,
+        id: :desc
       )
     end
 
@@ -94,6 +95,7 @@ module Resolvers
         "tasks.title ILIKE :term OR tasks.description ILIKE :term",
         term: term
       )
+    end
     end
   end
 end

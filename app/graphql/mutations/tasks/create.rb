@@ -6,7 +6,7 @@ module Mutations
       argument :project_id, ID, required: true
       argument :attributes, Types::Inputs::TaskInput, required: true
 
-      field :task, Types::TaskType, null: true
+      field :task, Types::Tasks::TaskType, null: true
       field :errors, [String], null: false
 
       def resolve(project_id:, attributes:)

@@ -10,7 +10,7 @@ module Mutations
       argument :status, Integer, required: false
       argument :owner_id, Integer, required: false
 
-      field :project, Types::ProjectType, null: true
+      field :project, Types::Projects::ProjectType, null: true
       field :errors, [String], null: false
 
       def resolve(id:, **attributes)

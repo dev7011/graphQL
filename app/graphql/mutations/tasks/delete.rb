@@ -9,7 +9,7 @@ module Mutations
       # Define the input fields for the mutation
       argument :id, ID, required: true
 
-      field :task, Types::TaskType, null: true
+      field :task, Types::Tasks::TaskType, null: true
       field :errors, [String], null: false
 
       def resolve(id:)
