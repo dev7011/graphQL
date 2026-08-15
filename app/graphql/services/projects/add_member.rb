@@ -1,21 +1,22 @@
 
   module Projects
     class AddMember
-      def initialize(project:, user:)
+      def initialize(project:, user:, role:)
         @project = project
         @user = user
+        @role = role
       end
 
       def call
         validate!
 
         project.project_members
-               .create(user: user)
+               .create(user: user, role: role)
       end
 
       private
 
-      attr_reader :project, :user
+      attr_reader :project, :user, :role
 
       def validate!
         if project.owner?(user)

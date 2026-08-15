@@ -3,11 +3,12 @@ module Mutations
     class AddProjectMember < Mutations::BaseMutation
       argument :project_id, ID, required: true
       argument :user_id, ID, required: true
+      argument :role, Types::Enums::ProjectMemberRoleEnum, required: true
 
       field :project_member, Types::Projects::ProjectMemberType, null: true
       field :errors, [String], null: false
 
-      def resolve(project_id:, user_id:)
+      def resolve(project_id:, user_id:, role:)
         authenticate_user!
 
         project = find_project!(project_id)
@@ -24,7 +25,10 @@ module Mutations
         end
 
         project_member = ::Projects::AddMember
-                           .new(project: project, user: user)
+                           .new(
+                             project: project,
+                             user: user,
+                             role: role)
                            .call
 
         if project_member.persisted?

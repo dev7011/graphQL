@@ -1,52 +1,67 @@
 class TaskPolicy
-  def initialize(user, task_or_project)
+  # [Pundit convention]
+  attr_reader :user, :record
+
+  # [Pundit convention]
+  def initialize(user, record)
     @user = user
-
-    if task_or_project.is_a?(Task)
-      @task = task_or_project
-      @project = task_or_project.project
-    else
-      @project = task_or_project
-    end
+    @record = record
   end
 
+  # [Business rule]
   def show?
-    admin? || owner? || editable_member?
+    project_policy.show?
   end
 
-  def create?
-    admin? || owner? || editable_member?
-  end
-
+  # [Business rule]
   def update?
     admin? || owner? || editable_member?
   end
 
-  def destroy?
-    admin? || owner?
-  end
-
+  # [Business rule]
   def assign?
     admin? || owner? || editable_member?
   end
 
+  # [Business rule]
+  def destroy?
+    admin? || owner? || project_manager?
+  end
+
   private
 
-  attr_reader :user, :task, :project
+  def project
+    record.project
+  end
+
+  def project_policy
+    ::ProjectPolicy.new(user, project)
+  end
 
   def admin?
     user.admin?
   end
 
   def owner?
-    project.owner_id == user.id
+    project.owner?(user)
   end
+
+  def member?
+    project.member?(user)
+  end
+
 
   def editable_member?
     return false unless user.user?
 
-    project.project_members.exists?(
-      user_id: user.id
+    project.project_role?(user, :manager) ||
+      project.project_role?(user, :developer)
+  end
+
+  def project_manager?
+    project.project_role?(
+      user,
+      :manager
     )
   end
 end

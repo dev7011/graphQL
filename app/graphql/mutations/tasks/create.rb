@@ -13,14 +13,19 @@ module Mutations
         authenticate_user!
 
         project = find_project!(project_id)
-        authorize_with!(TaskPolicy, project, :create)
+
+        authorize!(project, :create_task)
 
         task = ::Tasks::Create.new(project, attributes).call
+
         if task.persisted?
-          { task: task, errors: [] }
+          {
+            task: task,
+            errors: []
+          }
         else
           {
-            task: [],
+            task: nil,
             errors: task.errors.full_messages
           }
         end

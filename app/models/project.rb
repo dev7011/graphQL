@@ -36,4 +36,13 @@ class Project < ApplicationRecord
     owner?(user) || member?(user)
   end
 
+  def membership_for(user)
+    project_members.find_by(
+      user_id: user.id
+    )
+  end
+
+  def project_role?(user, role)
+    membership_for(user)&.role == role.to_s
+  end
 end

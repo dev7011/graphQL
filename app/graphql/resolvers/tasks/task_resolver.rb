@@ -5,27 +5,24 @@ module Resolvers
 
       argument :id, ID, required: true
 
-      def resolve(
-        project_id:,
-        status: nil,
-        priority: nil,
-        search: nil
-      )
+      def resolve(id:)
         authenticate_user!
 
-        project = find_project!(project_id)
+        task = find_task!(id)
 
-        authorize_read!(project)
+        authorize!(task, :show)
 
-        scope = project.tasks
-        scope = filter_status(scope, status)
-        scope = filter_priority(scope, priority)
-        scope = filter_search(scope, search)
+        task
+      end
 
-        scope.order(
-          created_at: :desc,
-          id: :desc
-        )
+      private
+
+      def find_task!(id)
+        Task.find_by(id: id) ||
+          raise(
+            GraphQL::ExecutionError,
+            "Task not found"
+          )
       end
     end
   end
