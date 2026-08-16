@@ -55,5 +55,10 @@ module Types
     field :tasks_result, resolver: Resolvers::Tasks::TasksResultResolver, null: true do
       description "Returns a list of tasks with result"
     end
+
+    field :dashboard, resolver: Resolvers::DashboardResolver, null: true do
+      description "Returns a Dashboard by ID"
+    end
+
   end
 end
