@@ -64,4 +64,21 @@ class TaskPolicy
       :manager
     )
   end
+
+  # [Pundit convention]
+  class Scope
+    attr_reader :user, :record
+
+    def initialize(user, record)
+      @user = user
+      @record = record
+    end
+
+    def resolve
+      return record.all if user.admin?
+
+      record.joins(:project)
+            .where(projects: { id: user.project_ids })
+    end
+  end
 end

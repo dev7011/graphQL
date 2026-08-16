@@ -4,14 +4,49 @@ module Resolvers
       type Types::Users::CurrentUserType, null: true
 
       def resolve
-        authenticate_user!
+        user = authenticate_user!
 
         {
-          user: current_user,
-          assigned_tasks: current_user.assigned_tasks,
-          project_memberships: current_user.project_members,
-          projects: current_user.projects
+          user: user,
+          projects: projects_for(user),
+          assigned_tasks: assigned_tasks_for(user),
+          project_memberships: project_memberships_for(user)
         }
+      end
+
+      private
+
+      def projects_for(user)
+        ::ProjectPolicy::Scope
+          .new(user, Project)
+          .resolve
+          .order(
+            created_at: :desc,
+            id: :desc
+          )
+      end
+
+      def assigned_tasks_for(user)
+        ::TaskPolicy::Scope
+          .new(user, Task)
+          .resolve
+          .where(
+            assignee_id: user.id
+          )
+          .order(
+            created_at: :desc,
+            id: :desc
+          )
+      end
+
+      def project_memberships_for(user)
+        user
+          .project_members
+          .includes(:project)
+          .order(
+            created_at: :desc,
+            id: :desc
+          )
       end
     end
   end
