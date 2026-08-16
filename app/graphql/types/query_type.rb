@@ -19,13 +19,8 @@ module Types
       ids.map { |id| context.schema.object_from_id(id, context) }
     end
 
-    field :current_user, null: true do
-      type UserType
+    field :current_user, resolver: Resolvers::Users::CurrentUserResolver, null: true do
       description "Returns the currently authenticated user"
-    end
-
-    def current_user
-      context[:current_user]
     end
 
     field :test, resolver: Resolvers::TestResolver, null: true do
