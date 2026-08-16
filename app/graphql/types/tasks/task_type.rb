@@ -7,6 +7,7 @@ module Types
 
       field :status, Types::Enums::TaskStatusEnum, null: false
       field :priority, Types::Enums::TaskPriorityEnum, null: false
+      field :due_date, GraphQL::Types::ISO8601Date, null: true
       field :project, Types::Projects::ProjectType, null: false
       field :assignee, Types::UserType, null: true
 
