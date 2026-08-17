@@ -5,6 +5,8 @@ FactoryBot.define do
       "Project #{n}"
     end
 
+    status { "active" }
+
     description { "Test project" }
 
     association :owner, factory: :user

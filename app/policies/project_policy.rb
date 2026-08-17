@@ -20,7 +20,7 @@ class ProjectPolicy
 
   # [Business rule]
   def destroy?
-    admin? || owner? || manager?
+    admin? || owner?
   end
 
   # [Business rule]
@@ -41,6 +41,10 @@ class ProjectPolicy
 
   def owner?
     record.owner_id == user.id
+  end
+
+  def create?
+    admin? || owner?
   end
 
   def member?
