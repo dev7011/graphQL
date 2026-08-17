@@ -41,8 +41,9 @@ RSpec.describe "Mutation project" do
       ).to_h
     end
 
-    context "wenn admin create a project" do
-      it "CreateProject successful " do
+    shared_examples "mutation create_project" do
+      it "creates a project" do
+        puts "share_examples"
         result = execute_mutation
 
         errors = result.dig("data", "createProject", "errors")
@@ -53,18 +54,14 @@ RSpec.describe "Mutation project" do
       end
     end
 
+    context "wenn admin create a project" do
+      it_behaves_like "mutation create_project"
+    end
+
     context "wenn user create a project" do
       let(:user) { create(:user, :custom) }
 
-      it "CreateProject successful " do
-        result = execute_mutation
-
-        errors = result.dig("data", "createProject", "errors")
-        project_id = result.dig("data", "createProject", "project").dig("id")
-
-        expect(errors).to be_empty
-        expect(Project.exists?(id: project_id)).to be true
-      end
+      it_behaves_like "mutation create_project"
     end
   end
 end
