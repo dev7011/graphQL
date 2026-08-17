@@ -1,84 +1,83 @@
-class TaskPolicy
-  # [Pundit convention]
-  attr_reader :user, :record
+# frozen_string_literal: true
 
-  # [Pundit convention]
+class TaskPolicy
   def initialize(user, record)
     @user = user
-    @record = record
+
+    if record.is_a?(Task)
+      @task = record
+      @project = record.project
+    else
+      @project = record
+    end
   end
 
-  # [Business rule]
+  # Admin, Project Owner hoặc bất kỳ ProjectMember nào
+  # đều được xem Task.
   def show?
-    project_policy.show?
+    admin? ||
+      project_owner? ||
+      project_member?
   end
 
-  # [Business rule]
+  # Admin, Owner, Manager, Developer được tạo Task.
+  def create?
+    admin? ||
+      project_owner? ||
+      manager? ||
+      developer?
+  end
+
+  # Admin, Owner, Manager, Developer được update Task.
   def update?
-    admin? || owner? || editable_member?
+    admin? ||
+      project_owner? ||
+      manager? ||
+      developer?
   end
 
-  # [Business rule]
+  # Admin, Owner, Manager, Developer được assign Task.
   def assign?
-    admin? || owner? || editable_member?
+    admin? ||
+      project_owner? ||
+      manager? ||
+      developer?
   end
 
-  # [Business rule]
+  # Admin, Owner, Manager được delete Task.
+  # Developer không được delete.
   def destroy?
-    admin? || owner? || project_manager?
+    admin? ||
+      project_owner? ||
+      manager?
   end
 
   private
 
-  def project
-    record.project
-  end
-
-  def project_policy
-    ::ProjectPolicy.new(user, project)
-  end
+  attr_reader :user, :task, :project
 
   def admin?
     user.admin?
   end
 
-  def owner?
+  def project_owner?
     project.owner?(user)
   end
 
-  def member?
-    project.member?(user)
+  def membership
+    @membership ||=
+      project.membership_for(user)
   end
 
-
-  def editable_member?
-    return false unless user.user?
-
-    project.project_role?(user, :manager) ||
-      project.project_role?(user, :developer)
+  def project_member?
+    membership.present?
   end
 
-  def project_manager?
-    project.project_role?(
-      user,
-      :manager
-    )
+  def manager?
+    membership&.role == "manager"
   end
 
-  # [Pundit convention]
-  class Scope
-    attr_reader :user, :record
-
-    def initialize(user, record)
-      @user = user
-      @record = record
-    end
-
-    def resolve
-      return record.all if user.admin?
-
-      record.joins(:project)
-            .where(projects: { id: user.project_ids })
-    end
+  def developer?
+    membership&.role == "developer"
   end
 end
