@@ -85,3 +85,5 @@ gem "graphiql-rails", group: :development
 gem "rack-attack", "~> 6.8"
 
 gem "pundit", "~> 2.5"
+
+gem "vite_rails", "~> 3.11"
