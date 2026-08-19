@@ -1,10 +1,10 @@
 import {
   FRAGMENT_PAGE_INFO,
-} from "../../../shared/graphql/fragments/common.js";
+} from "@/shared/graphql/fragments/common.js";
 
 import {
   FRAGMENT_PROJECT_FIELD,
-} from "../../../shared/graphql/fragments/project.js";
+} from "@/shared/graphql/fragments/project.js";
 
 
 export const GET_PROJECTS = `

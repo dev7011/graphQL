@@ -1,4 +1,4 @@
-import {graphqlRequest} from "../../../shared/api/graphql.js";
+import {graphqlRequest} from "@/shared/api/graphql.js";
 
 import { GET_PROJECTS, } from "./getProjects.js";
 
