@@ -6,7 +6,6 @@ import {
   FRAGMENT_PROJECT_FIELD,
 } from "@/shared/graphql/fragments/project.js";
 
-
 export const GET_PROJECTS = `
   ${FRAGMENT_PAGE_INFO}
   ${FRAGMENT_PROJECT_FIELD}
