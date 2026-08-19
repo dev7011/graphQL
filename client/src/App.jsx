@@ -1,24 +1,19 @@
 import { useState } from 'react'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import ProjectsPage from "./Pages/ProjectsPage.jsx";
 
+function App() {
   return (
     <>
       <section id="center">
         <h1
           style={{ color: 'red', fontSize: '3rem', textAlign: "center" }}
         >
-          WELCOME </h1>
-        <h2>
-          vite-react in GraphQL
-        </h2>
-
+          Vite-react in GraphQL
+        </h1>
+        <ProjectsPage />
       </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
     </>
   )
 }
