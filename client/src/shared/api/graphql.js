@@ -1,4 +1,4 @@
-import api from "./axios";
+import api from "./httpClient.js";
 
 export async function graphqlRequest({
   query,

@@ -7,15 +7,6 @@ const FRAGMENT_PAGE_INFO = `
   }
 `
 
-const FRAGMENT_NODES_PROJECT = `
-  fragment projectFields on Project {
-    id
-    name
-    description
-  }
-`
-
 export {
   FRAGMENT_PAGE_INFO,
-  FRAGMENT_NODES_PROJECT
 }

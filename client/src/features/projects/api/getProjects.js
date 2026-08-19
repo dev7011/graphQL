@@ -1,12 +1,15 @@
 import {
   FRAGMENT_PAGE_INFO,
-  FRAGMENT_NODES_PROJECT
-} from "./fragments.js";
+} from "../../../shared/graphql/fragments/common.js";
+
+import {
+  FRAGMENT_PROJECT_FIELD,
+} from "../../../shared/graphql/fragments/project.js";
 
 
 export const GET_PROJECTS = `
   ${FRAGMENT_PAGE_INFO}
-  ${FRAGMENT_NODES_PROJECT}
+  ${FRAGMENT_PROJECT_FIELD}
   
   query GetProjects(
     $first: Int

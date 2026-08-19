@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 
-import ProjectsPage from "./Pages/ProjectsPage.jsx";
+import ProjectsPage from "./features/projects/components/ProjectsPage.jsx";
 
 function App() {
   return (

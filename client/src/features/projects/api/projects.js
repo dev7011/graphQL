@@ -1,6 +1,6 @@
-import {graphqlRequest} from "./graphql";
+import {graphqlRequest} from "../../../shared/api/graphql.js";
 
-import { GET_PROJECTS, } from "../graphql/queries/getProjects";
+import { GET_PROJECTS, } from "./getProjects.js";
 
 export function getProjects({
                               first = 10,
