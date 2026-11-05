@@ -1,15 +1,13 @@
-# frozen_string_literal: true
-
 module Mutations
   module Tasks
     class Delete < BaseMutation
-      # FIX Problem mit duplication name Delete (projects/tasks)
+      # Avoid duplicate GraphQL mutation names
       graphql_name "DeleteTask"
 
-      # Define the input fields for the mutation
       argument :id, ID, required: true
 
-      field :task, Types::Tasks::TaskType, null: true
+      field :success, Boolean, null: false
+      field :deleted_id, ID, null: true
       field :errors, [String], null: false
 
       def resolve(id:)
@@ -24,13 +22,13 @@ module Mutations
         if task.destroy
           {
             success: true,
-            deleted_task_id: deleted_task_id,
+            deleted_id: deleted_task_id,
             errors: []
           }
         else
           {
             success: false,
-            deleted_task_id: nil,
+            deleted_id: nil,
             errors: task.errors.full_messages
           }
         end

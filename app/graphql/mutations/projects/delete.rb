@@ -6,9 +6,9 @@ module Mutations
       # Define the input fields for the mutation
       argument :id, ID, required: true
 
-      field :project, Types::Projects::ProjectType, null: true
       field :errors, [String], null: false
-      field :informations, [String], null: false
+      field :success, Boolean, null: false
+      field :deleted_project_id, [String], null: false
 
       def resolve(id:)
         authenticate_user!
