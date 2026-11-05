@@ -1,54 +1,40 @@
-class ProjectPolicy
-  # [Pundit convention]
-  attr_reader :user, :record
 
-  # [Pundit convention]
-  def initialize(user, record)
-    @user = user
-    @record = record
-  end
+# frozen_string_literal: true
 
-  # [Business rule]
+class ProjectPolicy < ApplicationPolicy
+
   def show?
     admin? || owner? || member? || manager?
   end
 
-  # [Business rule]
   def update?
     admin? || owner? || manager?
   end
 
-  # [Business rule]
   def destroy?
     admin? || owner?
   end
 
-  # [Business rule]
   def manage_members?
     admin? || owner? || manager?
   end
 
-  # [Business rule]
   def create_task?
     admin? || owner? || writable_member?
   end
 
   private
 
-  def admin?
-    user.admin?
-  end
-
   def owner?
     record.owner_id == user.id
   end
 
-  def create?
-    admin? || owner?
-  end
-
   def member?
     record.project_members.exists?(user_id: user.id)
+  end
+
+  def manager?
+    record.project_role?(user, :manager)
   end
 
   def writable_member?
@@ -58,19 +44,7 @@ class ProjectPolicy
       record.project_role?(user, :developer)
   end
 
-  def manager?
-    record.project_role?(user, :manager)
-  end
-
-
-  # [Pundit convention]
-  class Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-    end
+  class Scope < ApplicationPolicy::Scope
 
     def resolve
       return scope.all if user.admin?
